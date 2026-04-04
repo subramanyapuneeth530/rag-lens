@@ -82,7 +82,8 @@ async def ingest(
     chunk_size: int = Query(default=500, ge=100, le=2000),
     chunk_overlap: int = Query(default=50, ge=0, le=300),
 ):
-    if not file.filename.lower().endswith(".txt"):
+    filename = file.filename or "unknown.txt"
+    if not filename.lower().endswith(".txt"):
         raise HTTPException(status_code=400, detail="Only .txt files are supported.")
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as tmp:
@@ -90,14 +91,14 @@ async def ingest(
         tmp_path = tmp.name
 
     try:
-        chunks = ingest_file(tmp_path, file.filename, chunk_size, chunk_overlap)
+        chunks = ingest_file(tmp_path, filename, chunk_size, chunk_overlap)
         total_tokens = sum(c.token_count for c in chunks)
         total_chars = sum(len(c.text) for c in chunks)
         n = len(chunks)
-        logger.info(f"Ingested '{file.filename}' → {n} chunks, {total_tokens} tokens")
+        logger.info(f"Ingested '{filename}' → {n} chunks, {total_tokens} tokens")
         return IngestResponse(
             message="Document ingested successfully.",
-            filename=file.filename,
+            filename=filename,
             chunks=n,
             total_tokens=total_tokens,
             avg_tokens_per_chunk=round(total_tokens / max(n, 1), 1),

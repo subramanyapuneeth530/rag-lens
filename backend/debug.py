@@ -6,6 +6,8 @@ similarity scores, prompt construction, timing breakdowns.
 """
 
 
+from typing import Any
+
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -65,7 +67,7 @@ def get_token_detail(text: str) -> dict:
 
 # ── PCA projection ────────────────────────────────────────────────────────────
 
-def compute_pca_projection(embeddings: list[list[float]], n_components: int = 3) -> list[list[float]]:
+def compute_pca_projection(embeddings: list[list[float]] | np.ndarray, n_components: int = 3) -> dict[str, Any]:
     """
     Real sklearn PCA. Takes 384-dim MiniLM embeddings → 3D coordinates.
     Standardizes first so variance across dimensions is comparable.

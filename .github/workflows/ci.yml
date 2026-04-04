@@ -46,7 +46,7 @@ jobs:
         working-directory: backend
         run: |
           pip install pytest pytest-asyncio httpx
-          pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=short
         # Tests mock ChromaDB and Ollama — no services needed in CI
 
   frontend:

@@ -29,7 +29,7 @@ def get_embed_model() -> SentenceTransformer:
     return _embed_model
 
 
-def get_chroma_client() -> chromadb.Client:
+def get_chroma_client() -> Any:
     global _chroma_client
     if _chroma_client is None:
         _chroma_client = chromadb.PersistentClient(
