@@ -2,6 +2,7 @@
   <h1>🔍 RAG Lens</h1>
   <p><strong>A full-transparency, abstraction-free Retrieval-Augmented Generation (RAG) explainer tool.</strong></p>
 
+  [![CI](https://github.com/subramanyapuneeth530/rag-lens/actions/workflows/ci.yml/badge.svg)](https://github.com/subramanyapuneeth530/rag-lens/actions/workflows/ci.yml)
   [![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python&logoColor=white)](https://python.org)
   [![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=black)](https://reactjs.org/)
   [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
