@@ -1,0 +1,49 @@
+Retrieval Augmented Generation (RAG) Systems
+
+Retrieval Augmented Generation, commonly known as RAG, is an AI architecture that combines the power of large language models with external knowledge retrieval. Instead of relying solely on knowledge baked into model weights during training, RAG allows a model to look up relevant information at query time and use that information to ground its responses.
+
+How RAG Works
+
+The RAG pipeline consists of two main phases: indexing and retrieval-generation.
+
+During the indexing phase, documents are first split into smaller chunks of text. Each chunk is then passed through an embedding model, which converts the text into a high-dimensional vector — a list of numbers that captures the semantic meaning of the text. These vectors are stored in a vector database alongside the original text.
+
+During the retrieval-generation phase, when a user asks a question, that question is also converted into a vector using the same embedding model. The vector database then searches for the stored chunks whose vectors are most similar to the query vector. This similarity is typically measured using cosine similarity. The most relevant chunks are retrieved and passed to the language model as context, along with the original question. The language model then generates an answer grounded in that context.
+
+Vector Embeddings Explained
+
+An embedding is a dense vector representation of text. The all-MiniLM-L6-v2 model from HuggingFace produces embeddings with 384 dimensions. Each dimension captures some aspect of meaning, though individual dimensions are not easily interpretable by humans.
+
+The key property of good embeddings is that semantically similar texts produce vectors that are geometrically close together in the embedding space. For example, the sentences "The cat sat on the mat" and "A feline rested on a rug" would have similar embeddings even though they share almost no words.
+
+Cosine similarity measures the angle between two vectors rather than their distance. A score of 1.0 means the vectors point in exactly the same direction — identical meaning. A score of 0.0 means they are orthogonal — unrelated. A score of -1.0 means opposite meaning.
+
+ChromaDB as a Vector Store
+
+ChromaDB is an open-source vector database designed for storing and querying embeddings. It uses an algorithm called HNSW (Hierarchical Navigable Small World) for approximate nearest-neighbor search, which allows it to find the most similar vectors efficiently even when storing millions of embeddings.
+
+When rag-lens stores a chunk, it saves both the original text and its embedding vector. When a query arrives, ChromaDB computes the cosine distance between the query embedding and all stored embeddings, then returns the closest matches.
+
+Tokenization and the BertTokenizer
+
+Before a language model or embedding model can process text, the text must be converted into tokens — discrete units the model understands. The MiniLM model uses WordPiece tokenization, the same approach used by BERT.
+
+WordPiece works by starting with individual characters and iteratively merging common subword pairs. This means common words like "the" or "is" become single tokens, while rare or compound words get split into subword pieces. For example, "embeddings" might be tokenized as ["embed", "##dings"] where "##" indicates a continuation of the previous token.
+
+The MiniLM model has a maximum sequence length of 512 tokens. Chunks that exceed this limit get truncated, which is one reason why chunk size matters during the indexing phase.
+
+Large Language Models and Generation
+
+The generation component of RAG uses a large language model to synthesize an answer from the retrieved context. In this project, Llama 3.2 (3 billion parameters) runs locally via Ollama.
+
+Temperature is a key parameter that controls the randomness of generation. At temperature 0, the model always picks the most likely next token — maximally deterministic. At higher temperatures, lower-probability tokens get a chance to be selected, producing more varied and creative output. For factual question answering over documents, a low temperature like 0.1 is preferred because we want consistent, grounded answers rather than creative elaboration.
+
+The prompt template structures the interaction by providing the model with explicit instructions, the retrieved context, and the user question. The instruction to say "I could not find an answer in the provided documents" when the answer is not present is a hallucination guardrail — it gives the model a safe exit rather than forcing it to generate something plausible but wrong.
+
+Principal Component Analysis for Visualization
+
+Since embedding vectors have 384 dimensions, they cannot be directly visualized. Principal Component Analysis (PCA) is a dimensionality reduction technique that projects high-dimensional data into fewer dimensions while preserving as much variance as possible.
+
+PCA finds the directions in the original 384-dimensional space along which the data varies the most. The first principal component (PC1) is the direction of maximum variance. PC2 is the direction of maximum variance orthogonal to PC1. PC3 is orthogonal to both.
+
+By projecting all chunk embeddings onto PC1, PC2, and PC3, we get 3D coordinates that can be plotted. Chunks that cluster together in this 3D view are semantically similar — their full 384-dimensional embeddings are close to each other even though we can only see three dimensions of that relationship.

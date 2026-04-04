@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rag-lens</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg: #0f0f13;
+        --surface: #18181f;
+        --surface2: #22222c;
+        --border: rgba(255,255,255,0.08);
+        --text: #e8e8f0;
+        --muted: #888898;
+        --blue: #4a9eff;
+        --blue-dim: #1a3a5c;
+        --green: #4ade80;
+        --green-dim: #14532d;
+        --amber: #fbbf24;
+        --amber-dim: #451a03;
+        --purple: #a78bfa;
+        --purple-dim: #2e1065;
+        --teal: #2dd4bf;
+        --red: #f87171;
+        --font: 'Inter', system-ui, sans-serif;
+        --mono: 'JetBrains Mono', 'Fira Code', monospace;
+        --radius: 8px;
+        --radius-lg: 12px;
+      }
+      body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+      #root { min-height: 100vh; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: var(--bg); }
+      ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

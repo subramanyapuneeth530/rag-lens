@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# ChromaDB — persisted vector store, never commit
+backend/chroma_db/
+chroma_db/
+
+# HuggingFace model cache — large, downloaded automatically
+backend/.cache/
+.cache/
+*.bin
+*.safetensors
+*.onnx
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+uvicorn.log
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Windows
+ehthumbs.db
+$RECYCLE.BIN/
