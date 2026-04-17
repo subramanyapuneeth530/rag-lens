@@ -29,6 +29,10 @@ No black boxes. No abstracted chains. Just data transparency.
 
 ## ✨ Features & Interface
 
+<div align="center">
+  <img src="screenshots/RAG_lens.gif" alt="workflow" width="800">
+</div>
+
 ### 1. Document Ingestion
 Start by uploading simple plain-text knowledge. The backend normalizes the text through UTF-8 encoding, segments items into precise paragraphs and words (without external abstraction logic), and actively displays backend connectivity statuses. 
 
